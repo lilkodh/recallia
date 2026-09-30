@@ -1,0 +1,23 @@
+{
+  "name": "recallia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Recallia — a personal memory companion",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "workers/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
