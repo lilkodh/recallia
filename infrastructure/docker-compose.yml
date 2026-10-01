@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: recallia-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: recallia
+      POSTGRES_USER: recallia
+      POSTGRES_PASSWORD: recallia_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    container_name: recallia-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  object-storage:
+    image: rustfs/rustfs:latest
+    container_name: recallia-object-storage
+    restart: unless-stopped
+    command: /data
+    environment:
+      RUSTFS_ACCESS_KEY: recallia
+      RUSTFS_SECRET_KEY: recallia_dev_storage
+      RUSTFS_ADDRESS: ":9000"
+      RUSTFS_CONSOLE_ADDRESS: ":9001"
+      RUSTFS_CONSOLE_ENABLE: "true"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - object_storage_data:/data
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
+  object_storage_data:
