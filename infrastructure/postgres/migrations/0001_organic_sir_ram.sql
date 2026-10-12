@@ -1,0 +1,1 @@
+ALTER TABLE "ingestion_items" ADD CONSTRAINT "ingestion_items_device_external_unique" UNIQUE("device_id","external_id");
