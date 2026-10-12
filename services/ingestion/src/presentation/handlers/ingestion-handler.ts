@@ -7,11 +7,19 @@ export const ingestionHandler = (useCase: RegisterIngestionItem) => {
   return async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const input = ingestionItemSchema.parse(request.body);
-      const ingestionItem = await useCase.execute(input);
+      const result = await useCase.execute(input);
+
+      if (!result.created) {
+        return reply.status(200).send({
+          success: true,
+          message: "Ingestion item already exists",
+        });
+      }
 
       return reply.status(201).send({
-        ingestionItem,
-        message: "ingestionitem created successfully",
+        success: true,
+        ingestionItem: result.ingestionItem,
+        message: "Ingestion item created successfully",
       });
     } catch (err) {
       if (err instanceof ZodError) {

@@ -25,7 +25,10 @@ export class RegisterIngestionItem {
             createdAt
             
         )
-         return ingestionItem;
+        
+        const created = await this.repository.save(ingestionItem);
+
+         return {ingestionItem, created};
         
     }
 

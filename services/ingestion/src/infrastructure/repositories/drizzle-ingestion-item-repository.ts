@@ -5,8 +5,8 @@ import { ingestionItems } from "../database/schema/ingestion-items";
 
 // this is a implemantent part that say {"I know HOW to fulfill that contract using Drizzle and PostgreSQL."}
 export class DrizzleIngestionRepository implements IngestionItemRepository {
-  async save(ingestionItem: IngestionItem): Promise<void> {
-    await db.insert(ingestionItems).values({
+  async save(ingestionItem: IngestionItem): Promise<boolean> {
+    const inserted = await db.insert(ingestionItems).values({
       id: ingestionItem.id,
       deviceId: ingestionItem.deviceId,
       sourceType: ingestionItem.sourceType,
@@ -15,6 +15,16 @@ export class DrizzleIngestionRepository implements IngestionItemRepository {
       occurredAt: ingestionItem.occurredAt,
       status: ingestionItem.status,
       createdAt: ingestionItem.createdAt,
+    }).onConflictDoNothing({
+      target: [
+        ingestionItems.deviceId,
+        ingestionItems.externalId,
+      ]
+    }).returning({
+      id: ingestionItems.id,
+
     });
+    return inserted.length > 0
+
   }
 }
