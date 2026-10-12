@@ -4,6 +4,7 @@ import {
   varchar,
   text,
   timestamp,
+  unique,
 } from "drizzle-orm/pg-core";
 
 export const ingestionItems = pgTable("ingestion_items",{
@@ -15,4 +16,13 @@ export const ingestionItems = pgTable("ingestion_items",{
     occurredAt: timestamp("occurred_at").notNull(),
     status: varchar("status",{length: 30}).notNull(),
     createdAt: timestamp("created_at").notNull(),
-});
+
+},
+ (table) => [
+    unique("ingestion_items_device_external_unique").on(
+      table.deviceId,
+      table.externalId,
+    ),
+  ],
+
+);

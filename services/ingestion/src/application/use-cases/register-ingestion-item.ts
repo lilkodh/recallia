@@ -25,6 +25,9 @@ export class RegisterIngestionItem {
             createdAt
             
         )
+        
+        await this.repository.save(ingestionItem);
+
          return ingestionItem;
         
     }
