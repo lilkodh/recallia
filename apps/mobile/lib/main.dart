@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'features/ingestion/presentation/screens/ingestion_test_screen.dart';
+import 'features/onboarding/presentation/screens/onboarding_screen.dart';
+
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: RecalliaApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: RecalliaApp()));
 }
 
 class RecalliaApp extends StatelessWidget {
@@ -17,7 +14,7 @@ class RecalliaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Recallia',
-      home: const IngestionTestScreen(),
+      home: OnboardingScreen(onContinue: () {}),
     );
   }
 }

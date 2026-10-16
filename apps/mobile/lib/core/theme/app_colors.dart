@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 abstract final class AppColors {
   //  this is for Backgrounds to make sure i will not forget!
-  static const Color backgroundDark = Color(0xFF0D0D0D);
-  static const Color backgroundLight = Color(0xFFF7F5F0);
+  static const Color backgroundDark = Color.fromARGB(255, 0, 0, 0);
+  static const Color backgroundLight = Color.fromARGB(255, 237, 234, 228);
   static const Color surface = Color(0xFFFFFFFF);
 
   // this for  text i make that for separation

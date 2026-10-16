@@ -7,7 +7,7 @@ class AppPageIndicator extends StatelessWidget {
     required this.currentPage,
     required this.pageCount,
     super.key,
-  }) : assert(currentPage > 0),
+  }) : assert(pageCount > 0),
        assert(currentPage >= 0 && currentPage < pageCount);
 
   final int currentPage;
@@ -25,11 +25,13 @@ class AppPageIndicator extends StatelessWidget {
           curve: Curves.easeInOut,
           margin: const EdgeInsets.symmetric(horizontal: 4),
           width: isActive ? 24 : 6,
-          height: 6,
+          height: 7,
 
           decoration: BoxDecoration(
-            color: isActive ? AppColors.accent : AppColors.indicatorInactive,
-            borderRadius: BorderRadius.circular(99),
+            color: isActive
+                ? AppColors.backgroundDark
+                : AppColors.indicatorInactive,
+            borderRadius: BorderRadius.circular(100),
           ),
         );
       }),
