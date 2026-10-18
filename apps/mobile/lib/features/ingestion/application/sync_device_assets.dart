@@ -19,8 +19,8 @@ class SyncDeviceAssets {
         await ingestionApiService.ingest(asset);
         successfulCount++;
       } catch (err) {
-         failedAssetIds.add(asset.externalId);
-  print('Failed to sync ${asset.externalId}: $err');
+        failedAssetIds.add(asset.externalId);
+        print('Failed to sync ${asset.externalId}: $err');
       }
     }
     return SyncResult(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:mobile/features/navigation/presentation/screens/main_navigation_screen.dart';
 
 
 void main() {
@@ -14,7 +13,7 @@ class RecalliaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Recallia',
-      home: OnboardingScreen(onContinue: () {}),
+      home: const MainNavigationScreen(),
     );
   }
 }

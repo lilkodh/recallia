@@ -1,19 +1,12 @@
-enum DeviceAssetType {
-  photo,
-  video,
-  document,
-  audio,
-  screenshot,
-}
+enum DeviceAssetType { photo, video, document, audio, screenshot }
 
 class DeviceAsset {
-  
- final  String externalId;
- final DeviceAssetType sourceType;
+  final String externalId;
+  final DeviceAssetType sourceType;
   final String sourcePath;
- final DateTime occurredAt;
+  final DateTime occurredAt;
   DateTime modifiedAt;
-  final Map<String , dynamic> metadata;
+  final Map<String, dynamic> metadata;
   DeviceAsset({
     required this.externalId,
     required this.sourceType,
@@ -22,5 +15,4 @@ class DeviceAsset {
     required this.modifiedAt,
     required this.metadata,
   });
-  
 }

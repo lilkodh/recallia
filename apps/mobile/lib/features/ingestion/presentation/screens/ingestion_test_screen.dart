@@ -64,25 +64,18 @@ class _IngestionTestScreenState extends ConsumerState<IngestionTestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Asset Retrieval Test'),
-      ),
+      appBar: AppBar(title: const Text('Asset Retrieval Test')),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                result,
-                textAlign: TextAlign.center,
-              ),
+              Text(result, textAlign: TextAlign.center),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: isLoading ? null : testAssetRetrieval,
-                child: Text(
-                  isLoading ? 'Testing...' : 'Test Asset Retrieval',
-                ),
+                child: Text(isLoading ? 'Testing...' : 'Test Asset Retrieval'),
               ),
             ],
           ),

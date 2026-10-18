@@ -5,6 +5,7 @@ abstract final class AppColors {
   static const Color backgroundDark = Color.fromARGB(255, 0, 0, 0);
   static const Color backgroundLight = Color.fromARGB(255, 237, 234, 228);
   static const Color surface = Color(0xFFFFFFFF);
+  static const Color switchcolor = Color.fromARGB(255, 8, 190, 20);
 
   // this for  text i make that for separation
   static const Color primaryText = Color(0xFF171717);
