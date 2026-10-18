@@ -15,6 +15,8 @@ class DeviceAssets extends Table {
 
   TextColumn get processingStatus =>
       text().withDefault(const Constant('pending'))();
+      TextColumn get syncStatus =>
+    text().withDefault(const Constant('pending'))();
 
   DateTimeColumn get discoveredAt =>
       dateTime().withDefault(currentDateAndTime)();

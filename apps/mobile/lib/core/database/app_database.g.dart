@@ -87,6 +87,18 @@ class $DeviceAssetsTable extends DeviceAssets
     requiredDuringInsert: false,
     defaultValue: const Constant('pending'),
   );
+  static const VerificationMeta _syncStatusMeta = const VerificationMeta(
+    'syncStatus',
+  );
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+    'sync_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('pending'),
+  );
   static const VerificationMeta _discoveredAtMeta = const VerificationMeta(
     'discoveredAt',
   );
@@ -108,6 +120,7 @@ class $DeviceAssetsTable extends DeviceAssets
     modifiedAt,
     metadataJson,
     processingStatus,
+    syncStatus,
     discoveredAt,
   ];
   @override
@@ -178,6 +191,12 @@ class $DeviceAssetsTable extends DeviceAssets
         ),
       );
     }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+        _syncStatusMeta,
+        syncStatus.isAcceptableOrUnknown(data['sync_status']!, _syncStatusMeta),
+      );
+    }
     if (data.containsKey('discovered_at')) {
       context.handle(
         _discoveredAtMeta,
@@ -224,6 +243,10 @@ class $DeviceAssetsTable extends DeviceAssets
         DriftSqlType.string,
         data['${effectivePrefix}processing_status'],
       )!,
+      syncStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sync_status'],
+      )!,
       discoveredAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}discovered_at'],
@@ -245,6 +268,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
   final DateTime? modifiedAt;
   final String metadataJson;
   final String processingStatus;
+  final String syncStatus;
   final DateTime discoveredAt;
   const DeviceAsset({
     required this.externalId,
@@ -254,6 +278,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
     this.modifiedAt,
     required this.metadataJson,
     required this.processingStatus,
+    required this.syncStatus,
     required this.discoveredAt,
   });
   @override
@@ -270,6 +295,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
     }
     map['metadata_json'] = Variable<String>(metadataJson);
     map['processing_status'] = Variable<String>(processingStatus);
+    map['sync_status'] = Variable<String>(syncStatus);
     map['discovered_at'] = Variable<DateTime>(discoveredAt);
     return map;
   }
@@ -287,6 +313,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
           : Value(modifiedAt),
       metadataJson: Value(metadataJson),
       processingStatus: Value(processingStatus),
+      syncStatus: Value(syncStatus),
       discoveredAt: Value(discoveredAt),
     );
   }
@@ -304,6 +331,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
       modifiedAt: serializer.fromJson<DateTime?>(json['modifiedAt']),
       metadataJson: serializer.fromJson<String>(json['metadataJson']),
       processingStatus: serializer.fromJson<String>(json['processingStatus']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
       discoveredAt: serializer.fromJson<DateTime>(json['discoveredAt']),
     );
   }
@@ -318,6 +346,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
       'modifiedAt': serializer.toJson<DateTime?>(modifiedAt),
       'metadataJson': serializer.toJson<String>(metadataJson),
       'processingStatus': serializer.toJson<String>(processingStatus),
+      'syncStatus': serializer.toJson<String>(syncStatus),
       'discoveredAt': serializer.toJson<DateTime>(discoveredAt),
     };
   }
@@ -330,6 +359,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
     Value<DateTime?> modifiedAt = const Value.absent(),
     String? metadataJson,
     String? processingStatus,
+    String? syncStatus,
     DateTime? discoveredAt,
   }) => DeviceAsset(
     externalId: externalId ?? this.externalId,
@@ -339,6 +369,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
     modifiedAt: modifiedAt.present ? modifiedAt.value : this.modifiedAt,
     metadataJson: metadataJson ?? this.metadataJson,
     processingStatus: processingStatus ?? this.processingStatus,
+    syncStatus: syncStatus ?? this.syncStatus,
     discoveredAt: discoveredAt ?? this.discoveredAt,
   );
   DeviceAsset copyWithCompanion(DeviceAssetsCompanion data) {
@@ -364,6 +395,9 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
       processingStatus: data.processingStatus.present
           ? data.processingStatus.value
           : this.processingStatus,
+      syncStatus: data.syncStatus.present
+          ? data.syncStatus.value
+          : this.syncStatus,
       discoveredAt: data.discoveredAt.present
           ? data.discoveredAt.value
           : this.discoveredAt,
@@ -380,6 +414,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
           ..write('modifiedAt: $modifiedAt, ')
           ..write('metadataJson: $metadataJson, ')
           ..write('processingStatus: $processingStatus, ')
+          ..write('syncStatus: $syncStatus, ')
           ..write('discoveredAt: $discoveredAt')
           ..write(')'))
         .toString();
@@ -394,6 +429,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
     modifiedAt,
     metadataJson,
     processingStatus,
+    syncStatus,
     discoveredAt,
   );
   @override
@@ -407,6 +443,7 @@ class DeviceAsset extends DataClass implements Insertable<DeviceAsset> {
           other.modifiedAt == this.modifiedAt &&
           other.metadataJson == this.metadataJson &&
           other.processingStatus == this.processingStatus &&
+          other.syncStatus == this.syncStatus &&
           other.discoveredAt == this.discoveredAt);
 }
 
@@ -418,6 +455,7 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
   final Value<DateTime?> modifiedAt;
   final Value<String> metadataJson;
   final Value<String> processingStatus;
+  final Value<String> syncStatus;
   final Value<DateTime> discoveredAt;
   final Value<int> rowid;
   const DeviceAssetsCompanion({
@@ -428,6 +466,7 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
     this.modifiedAt = const Value.absent(),
     this.metadataJson = const Value.absent(),
     this.processingStatus = const Value.absent(),
+    this.syncStatus = const Value.absent(),
     this.discoveredAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -439,6 +478,7 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
     this.modifiedAt = const Value.absent(),
     required String metadataJson,
     this.processingStatus = const Value.absent(),
+    this.syncStatus = const Value.absent(),
     this.discoveredAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : externalId = Value(externalId),
@@ -453,6 +493,7 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
     Expression<DateTime>? modifiedAt,
     Expression<String>? metadataJson,
     Expression<String>? processingStatus,
+    Expression<String>? syncStatus,
     Expression<DateTime>? discoveredAt,
     Expression<int>? rowid,
   }) {
@@ -464,6 +505,7 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
       if (modifiedAt != null) 'modified_at': modifiedAt,
       if (metadataJson != null) 'metadata_json': metadataJson,
       if (processingStatus != null) 'processing_status': processingStatus,
+      if (syncStatus != null) 'sync_status': syncStatus,
       if (discoveredAt != null) 'discovered_at': discoveredAt,
       if (rowid != null) 'rowid': rowid,
     });
@@ -477,6 +519,7 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
     Value<DateTime?>? modifiedAt,
     Value<String>? metadataJson,
     Value<String>? processingStatus,
+    Value<String>? syncStatus,
     Value<DateTime>? discoveredAt,
     Value<int>? rowid,
   }) {
@@ -488,6 +531,7 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
       modifiedAt: modifiedAt ?? this.modifiedAt,
       metadataJson: metadataJson ?? this.metadataJson,
       processingStatus: processingStatus ?? this.processingStatus,
+      syncStatus: syncStatus ?? this.syncStatus,
       discoveredAt: discoveredAt ?? this.discoveredAt,
       rowid: rowid ?? this.rowid,
     );
@@ -517,6 +561,9 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
     if (processingStatus.present) {
       map['processing_status'] = Variable<String>(processingStatus.value);
     }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
     if (discoveredAt.present) {
       map['discovered_at'] = Variable<DateTime>(discoveredAt.value);
     }
@@ -536,6 +583,7 @@ class DeviceAssetsCompanion extends UpdateCompanion<DeviceAsset> {
           ..write('modifiedAt: $modifiedAt, ')
           ..write('metadataJson: $metadataJson, ')
           ..write('processingStatus: $processingStatus, ')
+          ..write('syncStatus: $syncStatus, ')
           ..write('discoveredAt: $discoveredAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -563,6 +611,7 @@ typedef $$DeviceAssetsTableCreateCompanionBuilder =
       Value<DateTime?> modifiedAt,
       required String metadataJson,
       Value<String> processingStatus,
+      Value<String> syncStatus,
       Value<DateTime> discoveredAt,
       Value<int> rowid,
     });
@@ -575,6 +624,7 @@ typedef $$DeviceAssetsTableUpdateCompanionBuilder =
       Value<DateTime?> modifiedAt,
       Value<String> metadataJson,
       Value<String> processingStatus,
+      Value<String> syncStatus,
       Value<DateTime> discoveredAt,
       Value<int> rowid,
     });
@@ -620,6 +670,11 @@ class $$DeviceAssetsTableFilterComposer
 
   ColumnFilters<String> get processingStatus => $composableBuilder(
     column: $table.processingStatus,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -673,6 +728,11 @@ class $$DeviceAssetsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get discoveredAt => $composableBuilder(
     column: $table.discoveredAt,
     builder: (column) => ColumnOrderings(column),
@@ -723,6 +783,11 @@ class $$DeviceAssetsTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<DateTime> get discoveredAt => $composableBuilder(
     column: $table.discoveredAt,
     builder: (column) => column,
@@ -767,6 +832,7 @@ class $$DeviceAssetsTableTableManager
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 Value<String> metadataJson = const Value.absent(),
                 Value<String> processingStatus = const Value.absent(),
+                Value<String> syncStatus = const Value.absent(),
                 Value<DateTime> discoveredAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => DeviceAssetsCompanion(
@@ -777,6 +843,7 @@ class $$DeviceAssetsTableTableManager
                 modifiedAt: modifiedAt,
                 metadataJson: metadataJson,
                 processingStatus: processingStatus,
+                syncStatus: syncStatus,
                 discoveredAt: discoveredAt,
                 rowid: rowid,
               ),
@@ -789,6 +856,7 @@ class $$DeviceAssetsTableTableManager
                 Value<DateTime?> modifiedAt = const Value.absent(),
                 required String metadataJson,
                 Value<String> processingStatus = const Value.absent(),
+                Value<String> syncStatus = const Value.absent(),
                 Value<DateTime> discoveredAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => DeviceAssetsCompanion.insert(
@@ -799,6 +867,7 @@ class $$DeviceAssetsTableTableManager
                 modifiedAt: modifiedAt,
                 metadataJson: metadataJson,
                 processingStatus: processingStatus,
+                syncStatus: syncStatus,
                 discoveredAt: discoveredAt,
                 rowid: rowid,
               ),

@@ -85,13 +85,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
 
-                    // PAGE 2: Connected memories.
+                    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 35),
 
-                        // Empty space for the connection widget.
+                        
                         Image.asset(
                           'assets/images/network.png',
                           width: 400,
@@ -123,13 +123,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     ),
 
-                    // PAGE 3: Find anything you forgot.
+                    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 15),
 
-                        // Empty space for the photo illustration.
+                        
                         const MemorySearchIllustration(),
                         const Spacer(),
 
@@ -158,7 +158,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
 
-              // Bottom controls shared by all three pages.
+              
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Row(

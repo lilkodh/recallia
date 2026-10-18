@@ -61,4 +61,10 @@ class DriftDeviceAssetRepository implements DeviceAssetRepository {
   Future<int> count() {
     return database.deviceAssets.count().getSingle();
   }
+
+  Future<void> updateSyncStatus(String externalId, String status) async {
+    await (database.update(database.deviceAssets)
+          ..where((table) => table.externalId.equals(externalId)))
+        .write(DeviceAssetsCompanion(syncStatus: Value(status)));
+  }
 }

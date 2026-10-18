@@ -9,7 +9,7 @@ class DiscoverDeviceAssets {
   DiscoverDeviceAssets({required this.connector, required this.repository});
   Future<List<DeviceAsset>> execute({
     bool includePhotos = true,
-  bool includeVideos = true,
+    bool includeVideos = true,
   }) async {
     final assets = await connector.discoverAssets(
       includePhotos: includePhotos,

@@ -9,8 +9,8 @@ import 'package:mobile/features/home/presentation/widgets/home_memory_grid.dart'
 import 'package:mobile/features/home/presentation/widgets/home_memory_tile.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({super.key,});
-  
+  const HomeScreen({super.key});
+
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
@@ -19,38 +19,37 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   List<DeviceAsset> _memories = [];
   bool _isLoading = false;
 
- @override
-void initState() {
-  super.initState();
-  _loadMemories();
-}
-
-Future<void> _loadMemories() async {
-  setState(() {
-    _isLoading = true;
-  });
-
-  try {
-    final memories =
-        await ref.read(discoverDeviceAssetsProvider).execute();
-
-    if (!mounted) return;
-
-    setState(() {
-      _memories = memories;
-      _isLoading = false;
-    });
-  } catch (error, stackTrace) {
-    debugPrint('Failed to load home memories: $error');
-    debugPrintStack(stackTrace: stackTrace);
-
-    if (!mounted) return;
-
-    setState(() {
-      _isLoading = false;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _loadMemories();
   }
-}
+
+  Future<void> _loadMemories() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final memories = await ref.read(discoverDeviceAssetsProvider).execute();
+
+      if (!mounted) return;
+
+      setState(() {
+        _memories = memories;
+        _isLoading = false;
+      });
+    } catch (error, stackTrace) {
+      debugPrint('Failed to load home memories: $error');
+      debugPrintStack(stackTrace: stackTrace);
+
+      if (!mounted) return;
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,31 +83,31 @@ Future<void> _loadMemories() async {
                 onAction: () {},
               ),
               const SizedBox(height: 16),
-                if (_isLoading)
-  const Center(
-    child: CircularProgressIndicator(),
-  )
-else if (_memories.isEmpty)
-  Text(
-    'Your memories will appear here.',
-    style: AppTextStyles.caption.copyWith(
-      color: AppColors.secondaryText,
-    ),
-  )
-else
-  HomeMemoryGrid(
-    itemCount: _memories.length > 4 ? 4 : _memories.length,
-    itemBuilder: (context, index) {
-      return HomeMemoryTile(
-        assetId: _memories[index].externalId,
-      );
-    },
-  ),
-             
+              Expanded(child: _buildGridContent()),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildGridContent() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_memories.isEmpty) {
+      return Text(
+        'Your memories will appear here.',
+        style: AppTextStyles.caption.copyWith(color: AppColors.secondaryText),
+      );
+    }
+
+    return HomeMemoryGrid(
+      itemCount: _memories.length > 4 ? 4 : _memories.length,
+      itemBuilder: (context, index) {
+        return HomeMemoryTile(assetId: _memories[index].externalId);
+      },
     );
   }
 }
