@@ -13,7 +13,7 @@ final GoRouter appRouter = GoRouter(
   
   initialLocation: '/onboarding', 
   routes: [
-    // 2. Add the standalone Onboarding Route
+    
     GoRoute(
       path: '/onboarding',
       builder: (context, state) => OnboardingScreen(
