@@ -4,4 +4,5 @@ abstract class DeviceAssetRepository {
   Future<void> saveAll(List<DeviceAsset> assets);
   Future<List<DeviceAsset>> getAll();
   Future<int> count();
+  Future<void> updateSyncStatus(String externalId, String status);
 }
