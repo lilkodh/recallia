@@ -3,15 +3,14 @@ import 'package:dio/dio.dart';
 class ApiClient {
   final String baseUrl;
   final Dio _dio;
-  ApiClient({required this.baseUrl, })
-    : _dio =
-          Dio(
-            BaseOptions(
-              baseUrl: baseUrl,
-              connectTimeout: const Duration(seconds: 10),
-              receiveTimeout: const Duration(seconds: 10),
-            ),
-          );
+  ApiClient({required this.baseUrl})
+    : _dio = Dio(
+        BaseOptions(
+          baseUrl: baseUrl,
+          connectTimeout: const Duration(seconds: 10),
+          receiveTimeout: const Duration(seconds: 10),
+        ),
+      );
 
   Future<Response<dynamic>> post(String path, Map<String, dynamic> data) async {
     try {

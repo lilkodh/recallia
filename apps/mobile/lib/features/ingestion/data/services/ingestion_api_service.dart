@@ -11,7 +11,7 @@ class IngestionApiService {
     required ApiClient apiClient,
     required InstallationIdService installationIdService,
   }) : _apiClient = apiClient,
-        _installationIdService = installationIdService;
+       _installationIdService = installationIdService;
 
   Future<void> ingest(DeviceAsset asset) async {
     final deviceId = await _installationIdService.getInstallationId();
