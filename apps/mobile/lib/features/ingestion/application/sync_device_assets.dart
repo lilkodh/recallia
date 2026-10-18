@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 
 import '../domain/repositories/device_asset_repository.dart';
+import '../domain/repositories/cloud_sync_preferences_repository.dart'; // Added
 import '../data/services/ingestion_api_service.dart';
 import 'models/sync_result.dart';
 
 class SyncDeviceAssets {
   final DeviceAssetRepository repository;
   final IngestionApiService ingestionApiService;
+  final CloudSyncPreferencesRepository cloudSyncPreferences;
 
   static const int _maxAttempts = 3;
   static const Duration _initialRetryDelay = Duration(seconds: 1);
@@ -16,9 +18,16 @@ class SyncDeviceAssets {
   SyncDeviceAssets({
     required this.repository,
     required this.ingestionApiService,
+    required this.cloudSyncPreferences,
   });
 
   Future<SyncResult> execute() async {
+    final isCloudSyncEnabled = await cloudSyncPreferences.isEnabled();
+
+    if (!isCloudSyncEnabled) {
+      return const SyncResult(successfulCount: 0, failedAssetIds: []);
+    }
+
     final assets = await repository.getAll();
 
     var successfulCount = 0;
