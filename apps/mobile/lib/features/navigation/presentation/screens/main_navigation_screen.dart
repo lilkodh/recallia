@@ -3,6 +3,7 @@ import 'package:mobile/core/theme/app_colors.dart';
 import 'package:mobile/features/home/presentation/screens/home_screen.dart';
 import 'package:mobile/features/memories/presentation/screens/memories_screen.dart';
 import 'package:mobile/features/navigation/presentation/widgets/floating_tab_bar.dart';
+import 'package:mobile/features/settings/presentation/screens/privacy_data_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -18,7 +19,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     HomeScreen(),
     MemoriesScreen(),
     _PlaceholderScreen(title: 'People'),
-    _PlaceholderScreen(title: 'You'),
+    PrivacyDataScreen(),
+   
   ];
 
   @override

@@ -19,7 +19,7 @@ class MemorySearchIllustration extends StatelessWidget {
                 child: Transform.rotate(
                   angle: -0.35,
                   child: const _PolaroidCard(
-                    imageAsset: 'assets/images/japan_street.png',
+                    imageAsset: 'assets/images/evening.jpg',
                   ),
                 ),
               ),
@@ -28,7 +28,7 @@ class MemorySearchIllustration extends StatelessWidget {
                   angle: -0.05,
 
                   child: const _PolaroidCard(
-                    imageAsset: 'assets/images/cafe_interior.png',
+                    imageAsset: 'assets/images/memory.jpg',
                   ),
                 ),
               ),
@@ -38,7 +38,7 @@ class MemorySearchIllustration extends StatelessWidget {
                 child: Transform.rotate(
                   angle: 0.45,
                   child: const _PolaroidCard(
-                    imageAsset: 'assets/images/mountain_lake.png',
+                    imageAsset: 'assets/images/travel.jpg',
                   ),
                 ),
               ),

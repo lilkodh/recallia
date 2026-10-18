@@ -85,7 +85,7 @@ class FloatingTabBar extends StatelessWidget {
                       ? AppColors.textOnDark
                       : AppColors.textOnDark.withValues(alpha: 0.55),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 2),
                 Text(
                   tab.label,
                   maxLines: 1,
