@@ -104,7 +104,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return HomeMemoryGrid(
-      itemCount: _memories.length > 4 ? 4 : _memories.length,
+      itemCount: _memories.length > 6? 6 : _memories.length,
       itemBuilder: (context, index) {
         return HomeMemoryTile(assetId: _memories[index].externalId);
       },

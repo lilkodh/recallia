@@ -12,16 +12,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  rabbitmq:
-    image: rabbitmq:4-management-alpine
-    container_name: recallia-rabbitmq
-    restart: unless-stopped
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-
+ 
   object-storage:
     image: rustfs/rustfs:latest
     container_name: recallia-object-storage

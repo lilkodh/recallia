@@ -122,7 +122,7 @@ class _MemoriesScreenState extends ConsumerState<MemoriesScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      // Search action will be connected later.
+
                     },
                     icon: const Icon(Icons.search_rounded),
                     color: AppColors.primaryText,
@@ -130,7 +130,7 @@ class _MemoriesScreenState extends ConsumerState<MemoriesScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      // Add-memory action will be connected later.
+                      
                     },
                     icon: const Icon(Icons.add_rounded),
                     color: AppColors.primaryText,
@@ -139,9 +139,8 @@ class _MemoriesScreenState extends ConsumerState<MemoriesScreen> {
                 ],
               ),
 
-              const SizedBox(height: 16), // Added spacing
-              _buildFilterChips(), // Step 3: Inserted the filter chips right here
-              const SizedBox(height: 24), // Added spacing before grid lists
+              const SizedBox(height: 16),
+              const SizedBox(height: 24), 
 
               Expanded(child: _buildMemoriesContent()),
             ],

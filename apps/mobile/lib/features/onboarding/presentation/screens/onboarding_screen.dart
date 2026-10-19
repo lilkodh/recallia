@@ -56,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     });
                   },
                   children: [
-                    // PAGE 1: Remember what matters.
+                    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
